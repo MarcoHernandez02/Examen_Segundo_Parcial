@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <!--LINKs-->
+    <link rel="stylesheet" href="main.css">
+    <script type="text/javascript" src="main.js"></script>
+    <title>RESTAURANTE HERSOSCHAGAR</title>
+</head>
+<body id="body">
+  <header id="heading">BIENVENIDO</header>
+
+   
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<div class="container">
+  <form>
+   <div class="form-group">
+    <p>
+      <label>Numero de mesa:</label> <br>
+      <input id="mesa" class="form-control" type="number" placeholder="Del 1 al 6"><br>
+    </p>
+    <p>
+      <label>Ingrese su nombre:</label> <br>
+      <input id="nombre" class="form-control" type="text" placeholder="Nombre..."><br>
+    </p>
+    <p>
+      <label>Ingrese la fecha</label> <br>
+      <input id="cedula" class="form-control" type="date" placeholder="dd/mm/aaaa" required> <br>
+    </p>
+    <button id="adicionar" class="btn btn-success" type="button">Adicionar a la tabla</button>
+  </div>
+</form>
+
+<p>Elementos en la Tabla:
+  <div id="adicionados"></div>
+</p>
+<table  id="mytable" class="table table-bordered table-hover ">
+  <tr>
+    <th>Mesa</th>
+    <th>Nombre</th>
+    <th>Fecha</th>
+    <th>Eliminar</th>
+
+  </tr>
+</table>
+
+</div>
+
+<script>
+
+$(document).ready(function() {
+//obtenemos el valor de los input
+
+$('#adicionar').click(function() {
+  var mesa = document.getElementById("mesa").value;
+  var nombre = document.getElementById("nombre").value;
+  var cedula = document.getElementById("cedula").value;
+  var i = 1; //contador para asignar id al boton que borrara la fila
+  var fila = '<tr id="row' + i + '"><td>' + mesa + '</td><td>' + nombre + '</td><td>' + cedula + '</td><td><button type="button" name="remove" id="' + i + '" class="btn btn-danger btn_remove">Quitar</button></td></tr>'; //esto seria lo que contendria la fila
+  alert("Reservación exitosa")
+  i++;
+
+  $('#mytable tr:first').after(fila);
+    $("#adicionados").text(""); //esta instruccion limpia el div adicioandos para que no se vayan acumulando
+    var nFilas = $("#mytable tr").length;
+    $("#adicionados").append(nFilas - 1);
+    //le resto 1 para no contar la fila del header
+    document.getElementById("nombre").value ="";
+    document.getElementById("cedula").value = "";
+    document.getElementById("mesa").value = "";
+    document.getElementById("mesa").focus();
+  });
+$(document).on('click', '.btn_remove', function() {
+  var button_id = $(this).attr("id");
+    //cuando da click obtenemos el id del boton
+    $('#row' + button_id + '').remove(); //borra la fila
+    //limpia el para que vuelva a contar las filas de la tabla
+    $("#adicionados").text("");
+    var nFilas = $("#mytable tr").length;
+    $("#adicionados").append(nFilas - 1);
+  });
+ 
+});
+
+    
+
+
+</script>
+
+
+</body>
+</html>
